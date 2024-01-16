@@ -101,14 +101,21 @@ namespace Simulazione_Verifica
                 {
                     stato = "Aperto";
                 }
-                Console.WriteLine($"Nome Conto : {nome} \nProvincia Utente : {provincia} \nSaldo Conto : {euro} \nStato Conto : {stato} \n");
+                Console.WriteLine($"Nome Conto : {nome} \nProvincia Utente : {provincia} \nSaldo Conto : {euro} euro \nStato Conto : {stato} \n");
                 Console.ReadLine();
             }
     }
 
-        class Banca
+    class Banca
+    {
+        Conto[] conti = new Conto[100];
+        public Banca()
         {
-            Conto[] conti = new Conto[100];
+            for (int i = 0; i < conti.Length; i++)
+            {
+                conti[i] = new Conto();
+            }
+        } 
             int i = 0;
 
             public void Scegli()
@@ -124,7 +131,7 @@ namespace Simulazione_Verifica
                 conti[i].Nome = Console.ReadLine();
                 Console.WriteLine("Inserisci provincia utente:");
                 conti[i].Provincia = Console.ReadLine();
-        }
+            }
             public void ChiudiConto()
             {
                 conti[i].chiusura();
@@ -141,7 +148,7 @@ namespace Simulazione_Verifica
             }
             public void VediSaldoConto()
             {
-                Console.WriteLine($"il tuo saldo è di {conti[i].saldo()} ");
+                Console.WriteLine($"il tuo saldo è di {conti[i].saldo()} euro");
                 Console.ReadLine();
             }
             public void VediInfoConto()
@@ -152,17 +159,31 @@ namespace Simulazione_Verifica
         {
             Console.WriteLine("Di quale provincia vuoi sapere il N di utenti?");
             string provincia = Console.ReadLine();
-            int contatore = 0;
-            int f = 0;
-            while (conti[f].Provincia != null )
+            int contatore = 0;           
+            for (int i = 0; i < 100; i++) 
             {
-                if (conti[f].Provincia == provincia)
-                {
+               if (conti[i].Provincia == provincia)
+               {
                     contatore++;
-                }
-                f++;
+               }
             }
             Console.WriteLine($"Gli untenti a {provincia} sono {contatore}");
+            Console.ReadLine();
+        }
+        public void SommaSaldoUtentiProv()
+        {
+            Console.WriteLine("Di quale provincia vuoi sapere il saldo totale di utenti?");
+            string provincia = Console.ReadLine();
+            float somma = 0;
+            for (int i = 0; i < 100; i++)
+            {
+                if (conti[i].Provincia == provincia)
+                {
+                    somma += conti[i].Euro;
+                }
+            }
+            Console.WriteLine($"Il saldo totale deli utenti a {provincia} è di {somma} euro");
+            Console.ReadLine();
         }
     }
 
@@ -184,6 +205,7 @@ namespace Simulazione_Verifica
                     Console.WriteLine("6) Visualizza info conto");
                     Console.WriteLine("7) Quale conto vuoi gestire");
                     Console.WriteLine("8) Quanti utenti per provincia");
+                    Console.WriteLine("9) Saldo totale per utenti della provincia");
                     Console.WriteLine("*) Esci");
 
                     switch (Console.ReadLine())
@@ -219,6 +241,10 @@ namespace Simulazione_Verifica
                         case "8":
                             b.ContaUtentiProv();
                             break;
+
+                        case "9":
+                            b.SommaSaldoUtentiProv();
+                             break;
 
                     default:
                             uscita = true;
