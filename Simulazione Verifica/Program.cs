@@ -104,16 +104,16 @@ namespace Simulazione_Verifica
                 Console.WriteLine($"Nome Conto : {nome} \nProvincia Utente : {provincia} \nSaldo Conto : {euro} euro \nStato Conto : {stato} \n");
                 Console.ReadLine();
             }
-    }
+        }
 
     class Banca
     {
-        Conto[] conti = new Conto[100];
+        List<Conto> conti = new List<Conto>();
         public Banca()
         {
-            for (int i = 0; i < conti.Length; i++)
+            for (int i = 0; i < 100; i++)
             {
-                conti[i] = new Conto();
+                conti.Add(new Conto());
             }
         } 
             int i = 0;
@@ -167,7 +167,7 @@ namespace Simulazione_Verifica
                     contatore++;
                }
             }
-            Console.WriteLine($"Gli untenti a {provincia} sono {contatore}");
+            Console.WriteLine($"Gli utenti a {provincia} sono {contatore}");
             Console.ReadLine();
         }
         public void SommaSaldoUtentiProv()
